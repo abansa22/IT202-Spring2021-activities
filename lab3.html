@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>lab3</title>
+    <style>
+    </style>
+  </head>
+  <body>
+    <h1 id="title"></h1>
+    <img id="hdurl" src=""></img>
+    <p id="explanation"></p>
+  </body>
+  <script>
+    fetch("https://api.nasa.gov/planetary/apod?api_key=cXAolOlmwH2kOU1EcCZ9WarMrhty4pHckw1X0ci0")
+    .then (response => {
+        return response.json();
+    })
+    .then (json => {
+      document.getElementById("title").innerHTML = json.title;
+      document.getElementById("hdurl").src = json.hdurl;
+      document.getElementById("explanation").innerHTML = json.explanation;
+    });
+  </script>
+</html>
