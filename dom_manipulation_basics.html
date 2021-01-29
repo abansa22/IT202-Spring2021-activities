@@ -28,7 +28,6 @@
 
     <script>
       // your code here
-
       //1
         document.getElementById("div1").textContent = "UIC"
       //2
@@ -38,9 +37,8 @@
       //4
         document.querySelector("img").src = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/University_of_Illinois_at_Chicago_circle_logo.svg/1200px-University_of_Illinois_at_Chicago_circle_logo.svg.png"
       //5
-      ////////////////////////////////////////
-        document.querySelector("img").width = "25";
-        document.querySelector("img").height = "25";
+        document.querySelector("img").style.width = "25%";
+        document.querySelector("img").style.height = "25%";
       //6
         document.getElementById("div3").remove();
       //7
@@ -56,9 +54,8 @@
         document.querySelector("ul").firstElementChild.classList.remove("big");
         
       //12
-        ///////////////////////////////////////////
         let c = document.querySelector("ul").childNodes
-        c[2].classList.add("big");
+        c[3].classList.add("blue");
 
       //13
         let imgElement = document.querySelector("img");
