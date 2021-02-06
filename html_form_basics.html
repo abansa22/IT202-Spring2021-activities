@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>repl.it</title>
+  </head>
+  <body>
+    <h1>Form Basics</h1>
+
+
+
+
+    <p id="uptonSinclairQuote">
+It is difficult to get a man to understand something, when his salary depends upon his not understanding it! -- Upton Sinclair
+    </p>
+    
+    <form action="/action_page.php" name="form1" id="form1">
+        <input type="text" id="text1" name="text1" value="enter value"/>
+        <br/>
+        <input type="radio" name="radio1" value="red">
+        <label for="red">red</label><br>
+        <input type="radio" name="radio1" value="green">
+        <label for="green">green</label><br>
+        <input type="radio" name="radio1" value="blue">
+        <label for="blue">blue</label>
+
+        <br/>
+        <br/>
+        <select name="select1" id="select1">
+            <option></option>
+            <option value="Mon">Mon</option>
+            <option value="Wed">Wed</option>
+            <option value="Fri">Fri</option>
+        </select>
+        
+        <br/>
+        <br/>
+        <textarea id="textarea1" name="textarea1">Please provide any additional feedback</textarea>
+    </form>
+
+    
+    <script>
+        document.querySelector("input").value = "Ajitesh Bansal";
+        document.querySelectorAll("input")[2].checked = true;
+        document.querySelector("textarea").value = document.querySelector("p").innerHTML
+        document.querySelector("select").onchange = function(){
+          console.log(document.querySelector("select option:checked").value);
+        }
+        
+
+    </script>
+  </body>
+</html>
