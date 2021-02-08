@@ -45,7 +45,7 @@
       let empData;
       
       // get the unique department names and populate the select control
-      fetch("ttps://data.cityofchicago.org/resource/xzkq-xp2w.json?$select=distinct%20department")
+      fetch("https://data.cityofchicago.org/resource/xzkq-xp2w.json?$select=distinct%20department")
       .then ( (response) => {return response.json() })
       .then ( (result) => {
 
@@ -72,7 +72,7 @@
   
       let endpoint = "https://data.cityofchicago.org/resource/xzkq-xp2w.json";
 
-      document.querySelector("#search").addEventListener ("clck", (e) => {
+      document.querySelector("#search").addEventListener ("click", (e) => {
     
           document.querySelector("#results").innerText = "fetching results";
 
