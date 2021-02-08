@@ -2,7 +2,7 @@
     "theme_color": "#690505",
     "background_color": "#690505",
     "display": "standalone",
-    "scope": "/",
+    "scope": "/IT202-Spring2021-activities",
     "start_url": "/IT202-Spring2021-activities",
     "app_name": "Lab5",
     "short_name": "Emp Search",
