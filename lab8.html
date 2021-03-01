@@ -21,6 +21,9 @@
       let c = document.querySelector("#c1");
       c.style.backgroundColor = "silver";
       let ctx = c.getContext("2d");
+      ctx.lineWidth = 10;  
+      ctx.strokeStyle = "#FFFFFF"; //white stroke 
+        
 
       // create objects per the lab activity
       let gameObjs = [];
@@ -44,14 +47,13 @@
       function drawCircle(obj, addStroke=false) {
         ctx.beginPath()
         ctx.arc(obj.x, obj.y, obj.radius, 0, Math.PI*2);
+        ctx.fillStyle = obj.color;
         if (addStroke) {
-          ctx.lineWidth = 10;  
-          ctx.strokeStyle = "#FFFFFF"; //white stroke 
           ctx.stroke();
         }
-        ctx.closePath();
-        ctx.fillStyle = obj.color;
         ctx.fill();
+        ctx.closePath();
+        
       }
       
 
