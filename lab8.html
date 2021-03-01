@@ -26,7 +26,7 @@
       let gameObjs = [];
 
       for (let i = 0; i < 25; i++) {
-        gameObjs.push( {x: getRandomInRange(0, 500), y: getRandomInRange(0, 500), radius: 25, color: "#" + Math.floor(Math.random()*16777215).toString(16), stroked: false} ); // random number to hex for color with max val from 0, for x y must be int from 0 to 500 (square canvas length)
+        gameObjs.push( {x: getRandomInRange(0, 500), y: getRandomInRange(0, 500), radius: 25, color: "#" + Math.floor(Math.random()*16777215).toString(16)} ); // random number to hex for color with max val from 0, for x y must be int from 0 to 500 (square canvas length)
       }
 
 
@@ -44,16 +44,18 @@
       function drawCircle(obj, addStroke=false) {
         ctx.beginPath()
         ctx.arc(obj.x, obj.y, obj.radius, 0, Math.PI*2);
-        ctx.closePath();
-        ctx.fillStyle = obj.color;
-        ctx.fill();
         if (addStroke) {
-          ctx.lineWidth = 6;  
+          ctx.lineWidth = 10;  
           ctx.strokeStyle = "#FFFFFF"; //white stroke 
           ctx.stroke();
         }
+        ctx.closePath();
+        ctx.fillStyle = obj.color;
+        ctx.fill();
       }
+      
 
+      stroked_idx = []
       // loop the objects to compare every pair
       //    and if a pair are colliding, redraw them
       //    with a white border
@@ -62,15 +64,9 @@
           if (i != j) { // for every pair of circles
             if (areColliding(gameObjs[i], gameObjs[j])) {
               //draw both circles over it with white outline
-              if (!gameObjs[i].stroked) {
-                drawCircle(gameObjs[i], true);
-              }
-              if (!gameObjs[j].stroked) {
-                drawCircle(gameObjs[j], true);
-              }
-              gameObjs[i].stroked = true;
-              gameObjs[j].stroked = true;
-            } else { // draw without stroke
+              drawCircle(gameObjs[i], true);
+              drawCircle(gameObjs[j], true);
+            } else { // draw without stroke              
               drawCircle(gameObjs[i], false);
               drawCircle(gameObjs[j], false);
             }
@@ -80,7 +76,6 @@
 
       // once you get that working, update the code above to create 25 additional gameObjects with random x, y and color values; and push them to the array before the drawing and comparison
       //done
-
 
     </script>
   </body>
