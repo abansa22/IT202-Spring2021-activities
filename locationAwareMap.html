@@ -76,13 +76,13 @@
 
             var new_det = document.createElement('p'); 
 
-            new_det.innerHTML = "<strong>" + "Circle " + count + "</strong>" + ": " + "<br>Latitude: " + position.coords.latitude + " " + "<br>Longitude: " + position.coords.longitude + " " 
+            new_det.innerHTML = "<strong>" + count + "</strong>" + ": " + "<br>Latitude: " + position.coords.latitude + " " + "<br>Longitude: " + position.coords.longitude + " " 
             + "<br>Timestamp: " + position.timestamp + "<br><br>";
 
             x.prepend(new_det)
             count += 1
 
-            // navigator.geolocation.clearWatch(watchId);
+            navigator.geolocation.clearWatch(watchId);
           }
 
           function error() {
