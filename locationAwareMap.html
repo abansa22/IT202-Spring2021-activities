@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geolocation using Google Maps</title>
+    <style type="text/css">
+      #map {
+        height: 80%;
+        width: 100%;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      #heading {
+        padding: 25px, 25px, 0px, 25px;
+        text-align: center;
+      }
+
+      h1 {
+        padding-top: 25px;
+        text-align: center;
+      }
+      
+      #author {
+        padding-bottom: 25px;
+        text-align: center;
+      }
+
+      p {
+        padding-bottom: 5px;
+        text-align: center;
+        line-height: 30px;
+      }
+
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+    <script>
+
+      function initMap() {
+        let count = 1
+        let x = document.getElementById("showDetails");
+
+        let map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: 36.2422994, lng: -113.7487596 },
+          zoom: 15,
+          mapTypeId: "terrain",
+        });
+
+        if('geolocation' in navigator) {
+          function success(position) {
+            console.log('Congratulations, you reached the target');
+            console.log("Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude)
+
+            const pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
+            
+            const cityCircle = new google.maps.Circle({
+              strokeColor: "#FF0000",
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+              fillColor: "#FF0000",
+              fillOpacity: 0.35,
+              map,
+              center: pos,
+              radius: 20,
+            });
+
+            map.setCenter(pos)
+
+            var new_det = document.createElement('p'); 
+
+            new_det.innerHTML = "<strong>" + "Circle " + count + "</strong>" + ": " + "<br>Latitude: " + position.coords.latitude + " " + "<br>Longitude: " + position.coords.longitude + " " 
+            + "<br>Timestamp: " + position.timestamp + "<br><br>";
+
+            x.prepend(new_det)
+            count += 1
+
+            // navigator.geolocation.clearWatch(watchId);
+          }
+
+          function error() {
+            alert('Sorry, no position available.');
+          }
+
+          const options = {
+            enableHighAccuracy: false,
+            maximumAge: 0,
+            timeout: 5000
+          };
+
+          navigator.geolocation.watchPosition(success, error, options);
+        } else {
+          alert("getCurrentPosition Error");
+        }
+        
+      }
+
+    </script>
+  </head>
+  <body>
+    <h1>Geolocation using Google Maps</h1>
+    <p id="author">By: Ajitesh Bansal</p>
+    <div id="map"></div>
+    <h2 id="heading">GeoLocation Live Data for each circle</h2>
+    <div id="showDetails"></div>
+    <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJ-OGQl7nANeWfhV2Je9nHvzwOgwLBK1c&callback=initMap&libraries=&v=weekly"
+      async
+    ></script>
+  </body>
+</html>

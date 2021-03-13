@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Camera selection</title>
+	<style>
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		html {
+			height: 100%;
+		}
+
+		body {
+			font-family: Helvetica, Arial, sans-serif;
+			min-height: 100%;
+			display: grid;
+			grid-template-rows: 1fr auto;
+		}
+
+		header {
+			background: #f0293e;
+			color: #fff;
+			text-align: center;
+		}
+
+		main {
+			background: #ffffff;
+			min-height: 80vh;
+		}
+
+		.controls {
+			text-align: center;
+			padding: 0.5em 0;
+			background: #333e5a;
+		}
+
+		video {
+			width: 100%;
+			max-width: 600px;
+			display: block;
+			margin: 0 auto;
+		}
+
+		footer {
+			background: #333e5a;
+			color: #fff;
+			text-align: center;
+		}
+
+		footer a {
+			color: #fff;
+		}
+	</style>
+
+</head>
+
+<body>
+
+	<header>
+		<h1>Camera fun</h1>
+	</header>
+
+	<main>
+		<div class="controls">
+			<button id="button">Get camera</button>
+			<button id="front-camera"></button>
+			<button id="back-camera"></button>
+
+    </div>
+
+    <video id="video" autoplay playsinline></video>
+  </main>
+
+  <footer>
+    <p>Rebuilt by
+      <a href="">abansa22</a>
+    </p>
+  </footer>
+
+  <script>
+		const video = document.getElementById('video');
+		const button = document.getElementById('button');
+		const button1 = document.getElementById('front-camera');
+		const button2 = document.getElementById('back-camera');
+		let currentStream;
+
+		let isClicked = 0
+
+		function stopMediaTracks(stream) {
+			stream.getTracks().forEach(track => {
+				track.stop();
+			});
+		}
+
+		function gotDevices(mediaDevices) {
+			buttons = [button1, button2]
+			
+			let count = 1;
+
+			mediaDevices.forEach(mediaDevice => {
+				if (mediaDevice.kind === 'videoinput') {
+					buttons[count-1].value = mediaDevice.deviceId;
+					const label = mediaDevice.label || `Camera ${count++}`;
+					buttons[count-1].innerHTML = label
+
+					count += 1
+				}
+			});
+		}
+
+		button1.addEventListener('click', event => {
+			isClicked = 1;
+		});
+
+		button2.addEventListener('click', event => {
+			isClicked = 2;
+		});
+
+		button.addEventListener('click', event => {
+			if (typeof currentStream !== 'undefined') {
+				stopMediaTracks(currentStream);
+			}
+			const videoConstraints = {};
+
+      if (isClicked == 0) {
+        videoConstraints.facingMode = 'environment';
+      }
+
+      else if (isClicked === 1) { // front camera
+				videoConstraints.deviceId = { exact: button1.value };
+			}
+      
+			else if (isClicked === 2) { // back camera
+				videoConstraints.deviceId = { exact: button2.value };
+			}
+
+			const constraints = {
+				video: videoConstraints,
+				audio: false
+			};
+			navigator.mediaDevices
+				.getUserMedia(constraints)
+				.then(stream => {
+					currentStream = stream;
+					video.srcObject = stream;
+					return navigator.mediaDevices.enumerateDevices();
+				})
+				.then(gotDevices)
+				.catch(error => {
+					console.error(error);
+				});
+		});
+
+		navigator.mediaDevices.enumerateDevices().then(gotDevices);
+  </script>
+</body>
+
+</html>
