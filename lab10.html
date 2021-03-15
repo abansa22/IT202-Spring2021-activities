@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lab 10</title>
+</head>
+<body>
+
+<h1>Lab 10 - Speech Synthesizer (abansa22)</h1>
+<p>Enter some text below and select a language to have your text uttered out loud by the speech synthesis web API in your selected language.</p>
+<form>
+    <label for="text">Enter text:</label>
+    <textarea  id="text" name="text" rows="4" cols="50"></textarea>
+    <br>
+    <label for="language">Select a language:</label>
+    <select id="language" onchange="handleLanguageChange()" name="language">
+      <option value=""></option>
+    </select>
+    <br>
+    <button id="synth-btn" type="submit" disabled>Play</button>
+</form>
+
+</body>
+
+<script>
+    let inputForm = document.querySelector('form');
+    let inputTxt = document.querySelector('#text');
+    let langSelect = document.querySelector('#language'); // or voice
+    let synthBtn = document.querySelector('#synth-btn');
+    
+    let synth = window.speechSynthesis;    
+    let voices = [];
+
+    function populateVoices() {
+        voices = synth.getVoices();
+        for(let i = 0; i < voices.length; i++) {
+            let option = document.createElement('option');
+            option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
+            option.value = i;
+            langSelect.appendChild(option);
+        }
+    }
+
+    populateVoices();
+    if (speechSynthesis.onvoiceschanged !== undefined) {
+        speechSynthesis.onvoiceschanged = populateVoices;
+    }
+    
+    
+    function handleLanguageChange() {
+        if (langSelect.value == "") { // empty option disable it
+            synthBtn.setAttribute('disabled', 'disabled');
+        } else {
+            synthBtn.removeAttribute('disabled');
+        }
+    }
+
+    inputForm.onsubmit = function(event) {
+        event.preventDefault();
+
+        let utterThis = new SpeechSynthesisUtterance(inputTxt.value);
+        utterThis.voice = voices[langSelect.value];
+        synth.speak(utterThis);
+        inputTxt.blur();
+    }
+</script>
+</html>
